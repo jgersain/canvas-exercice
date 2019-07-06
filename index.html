@@ -8,30 +8,34 @@
   <style>
     .container {
       display: grid;
+      grid-template-columns: repeat(2, minmax(250px, 250px));
       justify-content: center;
       align-content: center;
-      height: 100vh;
+      height: 90vh;
     }
 
-    #net {
-      border-left: 0.5px solid rgba(0, 0, 0, .5);
-      border-bottom: 0.5px solid rgba(0, 0, 0, .5);
-      background: rgba(100, 158, 113, 0.5)
+    .container canvas {
+      border: 0.5px solid rgba(0, 0, 0, .5);
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <canvas id="net" width="500" height="500">
-    </canvas>
+    <canvas id="box-1" width="250" height="250"></canvas>
+    <canvas id="box-2" width="250" height="250"></canvas>
+    <canvas id="box-3" width="250" height="250"></canvas>
+    <canvas id="box-4" width="250" height="250"></canvas>
     <button id="start"><strong>Generar Red</strong></button>
   </div>
   <script>
     let button = document.getElementById('start');
+    let area1 = document.getElementById('box-1');
+    let area2 = document.getElementById('box-2');
+    let area3 = document.getElementById('box-3');
+    let area4 = document.getElementById('box-4');
 
     // draw a line
-    let drawLine = (startX, startY, endX, endY, color) => {
-      let area = document.getElementById('net');
+    let drawLine = (startX, startY, endX, endY, area, color) => {
       let lienzo = area.getContext("2d");
       lienzo.beginPath();
       lienzo.strokeStyle = color;
@@ -49,14 +53,60 @@
       return `rgb(${red},${green},${blue})`;
     }
 
-    let drawNet = (size) => {
-      for (let point = 0; point <= size; point++) {
-        drawLine(0, point, point+1, size, setColor());
+    let drawA = () => {
+      let limit = 25
+      let initial = 0;
+      let xi, yf; 
+
+      while (initial < limit) {
+        xi = 10 * initial;
+        yf = 10 * ((limit - initial) - 1);
+        drawLine(xi, 250, 250, yf, area1, setColor());
+        initial++;
+      }
+    };
+
+    let drawB = () => {
+      let limit = 25
+      let initial = 0;
+      let xf, yi; 
+
+      while (initial < limit) {
+        xf = 10 * (initial + 1);
+        yi = 10 * initial;
+        drawLine(0, xf, yi, 250, area2, setColor());
+        initial++;
+      }
+    };
+
+    // for implementation
+    let drawC = () => {
+      let limit = 25
+      let xi, yf; 
+
+      for (let initial = 25; initial > 0; initial--) {
+        xi = 10 * (initial - 1);
+        yf = 10 * initial;
+        drawLine(xi, 0, 250, yf, area3, setColor());
+      }
+    };
+
+    let drawD = () => {
+      let limit = 25
+      let xi, yf; 
+
+      for (let initial = 1; initial <= limit; initial++) {
+        xi = 10 * initial;
+        yf = 10 * (limit - initial) +1;
+        drawLine(xi, 0, 0, yf, area4, setColor());
       }
     };
 
     button.addEventListener('click', function(){
-      drawNet(500);
+      drawA();
+      drawB();
+      drawC();
+      drawD();
     });
   </script>
 </body>
