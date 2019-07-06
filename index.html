@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Canvas</title>
+  <style>
+    .container {
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      height: 100vh;
+    }
+
+    #net {
+      border-left: 0.5px solid rgba(0, 0, 0, .5);
+      border-bottom: 0.5px solid rgba(0, 0, 0, .5);
+      background: rgba(100, 158, 113, 0.5)
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <canvas id="net" width="500" height="500">
+    </canvas>
+    <button id="start"><strong>Generar Red</strong></button>
+  </div>
+  <script>
+    let button = document.getElementById('start');
+
+    // draw a line
+    let drawLine = (startX, startY, endX, endY, color) => {
+      let area = document.getElementById('net');
+      let lienzo = area.getContext("2d");
+      lienzo.beginPath();
+      lienzo.strokeStyle = color;
+      lienzo.moveTo(startX, startY);
+      lienzo.lineTo(endX, endY);
+      lienzo.stroke();
+      lienzo.closePath();
+    };
+
+    // generate a rgba random color
+    let setColor = () => {
+      let red = Math.floor(Math.random()*256); 
+      let green = Math.floor(Math.random()*256);
+      let blue = Math.floor(Math.random()*256);
+      return `rgb(${red},${green},${blue})`;
+    }
+
+    let drawNet = (size) => {
+      for (let point = 0; point <= size; point++) {
+        drawLine(0, point, point+1, size, setColor());
+      }
+    };
+
+    button.addEventListener('click', function(){
+      drawNet(500);
+    });
+  </script>
+</body>
+</html>
