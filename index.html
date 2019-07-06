@@ -25,14 +25,20 @@
     <canvas id="box-2" width="250" height="250"></canvas>
     <canvas id="box-3" width="250" height="250"></canvas>
     <canvas id="box-4" width="250" height="250"></canvas>
-    <button id="start"><strong>Generar Red</strong></button>
+    <input id="lines-box" type="text" placeholder="Cantidad de lineas">
+    <button id="start">Generar</button>
   </div>
-  <script>
+  <script> 
+    let linesBox = document.getElementById('lines-box');
     let button = document.getElementById('start');
     let area1 = document.getElementById('box-1');
+    let area1Size = area1.width;
     let area2 = document.getElementById('box-2');
+    let area2Size = area2.width;
     let area3 = document.getElementById('box-3');
+    let area3Size = area3.width;
     let area4 = document.getElementById('box-4');
+    let area4Size = area4.width;
 
     // draw a line
     let drawLine = (startX, startY, endX, endY, area, color) => {
@@ -53,60 +59,66 @@
       return `rgb(${red},${green},${blue})`;
     }
 
-    let drawA = () => {
+    let drawA = (scale) => {
       let limit = 25
       let initial = 0;
       let xi, yf; 
 
       while (initial < limit) {
-        xi = 10 * initial;
-        yf = 10 * ((limit - initial) - 1);
+        xi = scale * initial;
+        yf = scale * ((limit - initial) - 1);
         drawLine(xi, 250, 250, yf, area1, setColor());
         initial++;
       }
     };
 
-    let drawB = () => {
+    let drawB = (scale) => {
       let limit = 25
       let initial = 0;
       let xf, yi; 
 
       while (initial < limit) {
-        xf = 10 * (initial + 1);
-        yi = 10 * initial;
-        drawLine(0, xf, yi, 250, area2, setColor());
+        xf = scale * (initial + 1);
+        yi = scale * initial;
+        drawLine(0, yi, xf, 250, area2, setColor());
         initial++;
       }
     };
 
     // for implementation
-    let drawC = () => {
+    let drawC = (scale) => {
       let limit = 25
       let xi, yf; 
 
       for (let initial = 25; initial > 0; initial--) {
-        xi = 10 * (initial - 1);
-        yf = 10 * initial;
+        xi = scale * (initial - 1);
+        yf = scale * initial;
         drawLine(xi, 0, 250, yf, area3, setColor());
       }
     };
 
-    let drawD = () => {
+    let drawD = (scale) => {
       let limit = 25
       let xi, yf; 
 
       for (let initial = 1; initial <= limit; initial++) {
-        xi = 10 * initial;
-        yf = 10 * (limit - initial) +1;
+        xi = scale * initial;
+        yf = scale * (limit - initial) +1;
         drawLine(xi, 0, 0, yf, area4, setColor());
       }
     };
 
     button.addEventListener('click', function(){
-      drawA();
-      drawB();
-      drawC();
-      drawD();
+      let lines = parseInt(linesBox.value);
+      let scale1 = parseInt(area1Size / lines);
+      let scale2 = parseInt(area2Size / lines);
+      let scale3 = parseInt(area3Size / lines);
+      let scale4 = parseInt(area4Size / lines);
+      
+      drawA(scale1);
+      drawB(scale2);
+      drawC(scale3);
+      drawD(scale4);
     });
   </script>
 </body>
