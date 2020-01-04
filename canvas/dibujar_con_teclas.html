@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Dibujo libre</title>
-</head>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: darkslategrey;
+      font-family: Helvetica, sans-serif;
+      text-align: center;
+      font-size: 2em;
+    }
+    canvas {
+      background-color: beige;
+    }
 
+    .neon-text {
+      color: #FFF;
+      text-shadow: 0 0 0.5em #87F, 0 0 0.5em #87F, 0 0 0.5em #87F;
+    }
+  </style>
+  <title>Dibujar con teclas</title>
+</head>
 <body>
-  <canvas width="300" height="300" id="area">
-  </canvas>
-  <p>mueve las teclas</p>
+  <div class="container neon-text">
+    <canvas width="300" height="300" id="area"></canvas>
+    <p>Mueve las teclas ↑ → ↓ ←</p>
+  </div>
   <script>
     document.addEventListener('keyup', dibujarConTeclado);
     let cuadro = document.getElementById('area');
@@ -66,5 +86,4 @@
     }
   </script>
 </body>
-
 </html>
